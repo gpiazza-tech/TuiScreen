@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="include\TuiScreen\include.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\screen\border.h" />
     <ClInclude Include="src\screen\screen.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="src\pch.c">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\screen\border.c" />
     <ClCompile Include="src\screen\screen.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

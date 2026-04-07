@@ -1,3 +1,4 @@
 C:\dev\TuiScreen\examples\main.c;C:\dev\TuiScreen\bin-int\Debug-windows-x86_64\TuiScreen\main.obj
 C:\dev\TuiScreen\src\pch.c;C:\dev\TuiScreen\bin-int\Debug-windows-x86_64\TuiScreen\pch.obj
+C:\dev\TuiScreen\src\screen\border.c;C:\dev\TuiScreen\bin-int\Debug-windows-x86_64\TuiScreen\border.obj
 C:\dev\TuiScreen\src\screen\screen.c;C:\dev\TuiScreen\bin-int\Debug-windows-x86_64\TuiScreen\screen.obj
