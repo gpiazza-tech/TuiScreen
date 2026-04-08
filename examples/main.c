@@ -56,14 +56,14 @@ int main()
 		"   /  -| \n"
 		"  |/-/_ >\n";
 
-	// LOOP
+	const char* directions_str = "Press ENTER to jump!";
+	const char* fps_str[20];
 
 	struct timespec current_time = { 0, 0 };
 	struct timespec last_time = { 0, 0 };
 	int code = timespec_get(&current_time, TIME_UTC);
 	float deltatime = 0.0f;
 
-	float logo_x_pos = 0.0f;
 	float bird_y_pos = 0.0f;
 	float bird_y_vel = 0.0f;
 	float bird_jump_force = 40.0f;
@@ -74,12 +74,14 @@ int main()
 		int code = timespec_get(&current_time, TIME_UTC);
 		deltatime = (float)(current_time.tv_nsec - last_time.tv_nsec) / 1000000000.0f;
 		if (deltatime < 0.0f) deltatime = 0.0f;
+		sprintf(fps_str, "fps: %d", (int)(1.0f / deltatime));
 
 		// SCREEN
 		screen_clear(&screen, ' ');
 
-		screen_draw_sprite(&screen, logo, logo_x_pos, 10);
-		screen_draw_sprite(&screen, "Press ENTER to jump!", logo_x_pos, 6);
+		screen_draw_sprite(&screen, logo, 0, 10);
+		screen_draw_sprite(&screen, directions_str, 0, 6);
+		screen_draw_sprite(&screen, fps_str, 0, 5);
 		screen_draw_sprite(&screen, bird, 0, bird_y_pos);
 
 		screen_print(&screen);
