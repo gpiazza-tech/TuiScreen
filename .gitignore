@@ -12,6 +12,7 @@
 **.vcxproj.user
 
 Makefile
+**.make
 
 # User-specific files
 *.rsuser
