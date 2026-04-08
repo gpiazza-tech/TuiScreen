@@ -15,7 +15,6 @@ project "TuiScreen"
     kind "ConsoleApp"
     language "C"
     staticruntime "on"
-    toolset "msc-v145"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -37,15 +36,15 @@ project "TuiScreen"
         "src",
     }
 
-    buildoptions 
-    {
-        "/utf-8",
-        "/TC",
-    }
-
     filter "system:windows"
         systemversion "latest"
-        defines "TUI_PLATFORM_WINDOWS"
+        toolset "msc-v145"
+
+        buildoptions 
+        {
+            "/utf-8",
+            "/TC",
+        }
     
     filter "configurations:Debug"
         defines "PXR_DEBUG"
