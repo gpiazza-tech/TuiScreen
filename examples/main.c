@@ -1,12 +1,32 @@
 #include <pch.h>
 #include <stdio.h>
+#include <threads.h>
+#include <math.h>
 
 #include <TuiScreen/include.h>
 
 #include <stdbool.h>
 
+bool pressed_enter = false;
+
+int get_input()
+{
+	while (true)
+	{
+		char* out;
+		scanf("%s", &out);
+		pressed_enter = true;
+	}
+}
+
 int main()
 {
+	// THREADS
+
+	thrd_t input_thrd;
+	thrd_create(&input_thrd, &get_input, NULL);
+
+	// INIT SCREEN
 	int width = 118;
 	int height = 26;
 
@@ -21,6 +41,7 @@ int main()
 
 	screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
 	screen.sprite_origin = TUI_SPRITE_ORIGIN_CENTER;
+	screen.wrap_mode = TUI_WRAP_MODE_IGNORE;
 
 	const char* logo =
 		" =======  |     |  =======                                        \n"
@@ -29,22 +50,35 @@ int main()
 		"    |     |     |     |          ===|   ===  | |  |==  |== |  |=| \n"
 		"    |     |=====|  =======                                        \n";
 
-	screen.wrap_mode = TUI_WRAP_MODE_LOOP; 
+	const char* bird =
+		"    _--  \n"
+		"   /  -| \n"
+		"  |/-/_ >\n";
 
-	float x_pos = 0.0f;
-	float y_pos = height / 2.0f;
+	float logo_x_pos = 0.0f;
+	float bird_y_pos = 0.0f;
+	float bird_y_vel = 0.0f;
+	float bird_jump_force = 0.005f;
 
 	while(true)
 	{
 		screen_clear(&screen, ' ');
 
-		//screen_draw_sprite(&screen, logo, x_pos, y_pos);
-		screen_draw_sprite(&screen, logo, 0, 0);
+		screen_draw_sprite(&screen, logo, logo_x_pos, 10);
+		screen_draw_sprite(&screen, "Press any key + ENTER to jump!", logo_x_pos, 6);
+		screen_draw_sprite(&screen, bird, 0, bird_y_pos);
 
 		screen_print(&screen);
 
-		x_pos += 0.01f;
-		y_pos += 0.001f;
+		if (pressed_enter)
+		{
+			bird_y_vel = bird_jump_force;
+			pressed_enter = false;
+		}
+
+		bird_y_vel -= 0.000001f;
+		bird_y_pos += bird_y_vel;
+		bird_y_pos = fmaxf(-11, bird_y_pos);
 	}
 
 	return 0;

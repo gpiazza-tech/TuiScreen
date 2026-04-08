@@ -80,7 +80,7 @@ static void _screen_transform_position(struct screen* screen, int* x, int* y)
 		*y = screen->height - 1 - *y;
 		break;
 	case TUI_SCREEN_ORIGIN_CENTER:
-		*x = screen->width / 2 - 1 - *x;
+		*x = screen->width / 2 - 1 + *x;
 		*y = screen->height / 2 - 1 - *y;
 		break;
 	default:

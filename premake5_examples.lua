@@ -14,6 +14,7 @@ project "TuiScreen"
     location "."
     kind "ConsoleApp"
     language "C"
+    cdialect "C11"
     staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
