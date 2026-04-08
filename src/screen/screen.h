@@ -1,6 +1,5 @@
 #pragma once
 
-#include <screen/border.h>
 #include <screen/settings.h>
 #include <screen/sprite.h>
 
@@ -15,7 +14,6 @@ struct screen
 	char buffer[_TUI_MAX_SCREEN_WIDTH * _TUI_MAX_SCREEN_HEIGHT + _TUI_MAX_SCREEN_HEIGHT];
 	int buffer_size;
 
-	struct border border;
 	enum wrap_mode wrap_mode;
 };
 
@@ -25,6 +23,6 @@ void screen_print(struct screen* screen);
 void screen_clear(struct screen* screen, char c);
 void screen_set_pixel(struct screen* screen, char c, int x, int y);
 
-void screen_set_border(struct screen* screen, struct border* border);
+void screen_set_border(struct screen* screen, const char* border);
 
 void screen_draw_sprite(struct screen* screen, sprite sprite, int x, int y);

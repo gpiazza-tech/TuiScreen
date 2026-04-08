@@ -1,7 +1,6 @@
 #include <pch.h>
 #include "screen.h"
 
-#include <screen/border.h>
 #include <screen/settings.h>
 #include <screen/sprite.h>
 
@@ -15,19 +14,17 @@ void screen_init(struct screen* screen, int width, int height)
 
 	screen->wrap_mode = TUI_WRAP_MODE_IGNORE;
 
-	border_init(&screen->border,
-		"***"
-		"* *"
-		"***"
-	);
-
 	int buffer_width = width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = height + 2; // + 2 for edges
 
 	screen->buffer_size = buffer_width * buffer_height + 1;
 	screen->buffer[screen->buffer_size];
 
-	screen_set_border(screen, &screen->border);
+	screen_set_border(screen,
+		"   "
+		"   "
+		"   "
+	);
 
 	// NEW LINES
 	for (int i = 0; i < buffer_height; i++)
@@ -88,32 +85,39 @@ void screen_set_pixel(struct screen* screen, char c, int x, int y)
 	screen->buffer[buffer_width + y * buffer_width + x + 1] = c; // + y to skip '\n' on every line
 }
 
-void screen_set_border(struct screen* screen, struct border* border)
+void screen_set_border(struct screen* screen, const char* characters)
 {
+	int corner_top_left			= characters[0];
+	int edge_top				= characters[1];
+	int corner_top_right		= characters[2];
+	int edge_left				= characters[3];
+	int edge_right				= characters[5];
+	int corner_bottom_left		= characters[6];
+	int edge_bottom				= characters[7];
+	int corner_bottom_right		= characters[8];
+
 	int buffer_width = screen->width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = screen->height + 2; // + 2 for edges
-
-	screen->border = *border;
 
 	// TOP AND BOTTOM EDGES
 	for (int i = 0; i < screen->width; i++)
 	{
-		screen->buffer[i + 1] = screen->border.edge_top;
-		screen->buffer[screen->buffer_size - 3 - i] = screen->border.edge_bottom;
+		screen->buffer[i + 1] = edge_top;
+		screen->buffer[screen->buffer_size - 4 - i] = edge_bottom;
 	}
 
 	// LEFT AND RIGHT EDGES
 	for (int i = 0; i < screen->height; i++)
 	{
-		screen->buffer[buffer_width + i * buffer_width] = screen->border.edge_left;
-		screen->buffer[buffer_width + (i + 1) * buffer_width - 2] = screen->border.edge_right;
+		screen->buffer[buffer_width + i * buffer_width] = edge_left;
+		screen->buffer[buffer_width + (i + 1) * buffer_width - 2] = edge_right;
 	}
 
 	// CORNERS
-	screen->buffer[0] = screen->border.corner_top_left;
-	screen->buffer[buffer_width - 2] = screen->border.corner_top_right;
-	screen->buffer[buffer_height * buffer_width - buffer_width] = screen->border.corner_bottom_left;
-	screen->buffer[buffer_height * buffer_width - 2] = screen->border.corner_bottom_right;
+	screen->buffer[0] = corner_top_left;
+	screen->buffer[buffer_width - 2] = corner_top_right;
+	screen->buffer[buffer_height * buffer_width - buffer_width] = corner_bottom_left;
+	screen->buffer[buffer_height * buffer_width - 2] = corner_bottom_right;
 }
 
 void screen_draw_sprite(struct screen* screen, sprite sprite, int x, int y)

@@ -13,6 +13,12 @@ int main()
 	struct screen screen;
 	screen_init(&screen, width, height);
 
+	screen_set_border(&screen,
+		"+++"
+		"| |"
+		"+++"
+	);
+
 	sprite logo =
 		"=======  |     |  =======                                        \n"
 		"   |     |     |     |          |===   ===  |==  |==  |== |=|  | \n"
