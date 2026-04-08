@@ -172,7 +172,7 @@ static void _screen_transform_sprite_position(struct screen* screen, const char*
 			height++;
 	}
 
-	int width = 1;
+	int width = 0;
 	for (int i = 0; i < len; i++)
 	{
 		if (sprite[i] == '\n')
