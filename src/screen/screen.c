@@ -2,7 +2,6 @@
 #include "screen.h"
 
 #include <screen/settings.h>
-#include <screen/sprite.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -120,7 +119,7 @@ void screen_set_border(struct screen* screen, const char* characters)
 	screen->buffer[buffer_height * buffer_width - 2] = corner_bottom_right;
 }
 
-void screen_draw_sprite(struct screen* screen, sprite sprite, int x, int y)
+void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y)
 {
 	int sprite_len = strlen(sprite);
 

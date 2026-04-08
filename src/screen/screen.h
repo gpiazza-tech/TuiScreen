@@ -1,7 +1,6 @@
 #pragma once
 
 #include <screen/settings.h>
-#include <screen/sprite.h>
 
 #define _TUI_MAX_SCREEN_WIDTH 200
 #define _TUI_MAX_SCREEN_HEIGHT 200
@@ -25,4 +24,4 @@ void screen_set_pixel(struct screen* screen, char c, int x, int y);
 
 void screen_set_border(struct screen* screen, const char* border);
 
-void screen_draw_sprite(struct screen* screen, sprite sprite, int x, int y);
+void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y);
