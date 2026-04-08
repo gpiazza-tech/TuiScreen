@@ -13,7 +13,10 @@ struct screen
 	char buffer[_TUI_MAX_SCREEN_WIDTH * _TUI_MAX_SCREEN_HEIGHT + _TUI_MAX_SCREEN_HEIGHT];
 	int buffer_size;
 
+	// SETTINGS
 	enum wrap_mode wrap_mode;
+	enum screen_origin screen_origin;
+	enum sprite_origin sprite_origin;
 };
 
 void screen_init(struct screen* screen, int width, int height);

@@ -3,6 +3,7 @@
 
 #include <screen/settings.h>
 
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -12,6 +13,8 @@ void screen_init(struct screen* screen, int width, int height)
 	screen->height = height;
 
 	screen->wrap_mode = TUI_WRAP_MODE_IGNORE;
+	screen->screen_origin = TUI_SCREEN_ORIGIN_TOP_LEFT;
+	screen->sprite_origin = TUI_SPRITE_ORIGIN_TOP_LEFT;
 
 	int buffer_width = width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = height + 2; // + 2 for edges
@@ -60,7 +63,32 @@ void screen_clear(struct screen* screen, char c)
 	}
 }
 
-void screen_set_pixel(struct screen* screen, char c, int x, int y)
+static void _screen_transform_position(struct screen* screen, int* x, int* y)
+{
+	switch (screen->screen_origin)
+	{
+	case TUI_SCREEN_ORIGIN_TOP_LEFT:
+		break;
+	case TUI_SCREEN_ORIGIN_BOTTOM_LEFT:
+		*y = screen->height - 1 - *y;
+		break;
+	case TUI_SCREEN_ORIGIN_TOP_RIGHT:
+		*x = screen->width - 1 - *x;
+		break;
+	case TUI_SCREEN_ORIGIN_BOTTOM_RIGHT:
+		*x = screen->width - 1 - *x;
+		*y = screen->height - 1 - *y;
+		break;
+	case TUI_SCREEN_ORIGIN_CENTER:
+		*x = screen->width / 2 - 1 - *x;
+		*y = screen->height / 2 - 1 - *y;
+		break;
+	default:
+		break;
+	}
+}
+
+static void _screen_set_pixel_no_transform(struct screen* screen, char c, int x, int y)
 {
 	int buffer_width = screen->width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = screen->height + 2; // + 2 for edges
@@ -81,7 +109,18 @@ void screen_set_pixel(struct screen* screen, char c, int x, int y)
 		}
 	}
 
+	if (x < 0)
+		x = screen->width - abs(x);
+	if (y < 0)
+		y = screen->height - abs(y);
+
 	screen->buffer[buffer_width + y * buffer_width + x + 1] = c; // + y to skip '\n' on every line
+}
+
+void screen_set_pixel(struct screen* screen, char c, int x, int y)
+{
+	_screen_transform_position(screen, &x, &y);
+	_screen_set_pixel_no_transform(screen, c, x, y);
 }
 
 void screen_set_border(struct screen* screen, const char* characters)
@@ -119,8 +158,55 @@ void screen_set_border(struct screen* screen, const char* characters)
 	screen->buffer[buffer_height * buffer_width - 2] = corner_bottom_right;
 }
 
+static void _screen_transform_sprite_position(struct screen* screen, const char* sprite, int* x, int* y)
+{
+	if (screen->sprite_origin == TUI_SPRITE_ORIGIN_TOP_LEFT)
+		return;
+
+	int len = strlen(sprite);
+
+	int height = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if (sprite[i] == '\n')
+			height++;
+	}
+
+	int width = 1;
+	for (int i = 0; i < len; i++)
+	{
+		if (sprite[i] == '\n')
+			break;
+		width++;
+	}
+
+	switch (screen->sprite_origin)
+	{
+	// case TUI_SPRITE_ORIGIN_TOP_LEFT already handled
+	case TUI_SPRITE_ORIGIN_BOTTOM_LEFT:
+		*y -= height - 1;
+		break;
+	case TUI_SPRITE_ORIGIN_TOP_RIGHT:
+		*x -= width - 1;
+		break;
+	case TUI_SPRITE_ORIGIN_BOTTOM_RIGHT:
+		*x -= width - 1;
+		*y -= height - 1;
+		break;
+	case TUI_SPRITE_ORIGIN_CENTER:
+		*x -= width / 2 - 1;
+		*y -= height / 2 - 1;
+		break;
+	default:
+		break;
+	}
+}
+
 void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y)
 {
+	_screen_transform_position(screen, &x, &y);
+	_screen_transform_sprite_position(screen, sprite, &x, &y);
+
 	int sprite_len = strlen(sprite);
 
 	int current_x = x;
@@ -141,7 +227,7 @@ void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y)
 			continue;
 		}
 
-		screen_set_pixel(screen, sprite[i], current_x, current_y);
+		_screen_set_pixel_no_transform(screen, sprite[i], current_x, current_y);
 		current_x++;
 	}
 }

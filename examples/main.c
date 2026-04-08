@@ -19,6 +19,9 @@ int main()
 		"+++"
 	);
 
+	screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
+	screen.sprite_origin = TUI_SPRITE_ORIGIN_CENTER;
+
 	const char* logo =
 		"=======  |     |  =======                                        \n"
 		"   |     |     |     |          |===   ===  |==  |==  |== |=|  | \n"
@@ -35,7 +38,8 @@ int main()
 	{
 		screen_clear(&screen, ' ');
 
-		screen_draw_sprite(&screen, logo, x_pos, y_pos);
+		//screen_draw_sprite(&screen, logo, x_pos, y_pos);
+		screen_draw_sprite(&screen, logo, 0, 0);
 
 		screen_print(&screen);
 
