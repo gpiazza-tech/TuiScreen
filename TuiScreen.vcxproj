@@ -137,7 +137,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\TuiScreen\include.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\screen\border.h" />
     <ClInclude Include="src\screen\screen.h" />

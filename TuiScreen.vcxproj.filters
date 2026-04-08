@@ -7,10 +7,25 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\screen">
+      <UniqueIdentifier>{7CD6BE78-688E-00C6-D195-D921BD6C9BB6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screen\border.h">
+      <Filter>src\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screen\screen.h">
+      <Filter>src\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screen\settings.h">
+      <Filter>src\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screen\sprite.h">
+      <Filter>src\screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -19,6 +34,12 @@
     </ClCompile>
     <ClCompile Include="src\pch.c">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screen\border.c">
+      <Filter>src\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screen\screen.c">
+      <Filter>src\screen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
