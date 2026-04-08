@@ -97,6 +97,8 @@ int main()
 		bird_y_vel -= 60.0f * deltatime;
 		bird_y_pos += bird_y_vel * deltatime;
 		bird_y_pos = fmaxf(-11, bird_y_pos);
+
+		thrd_sleep(&(struct timespec){ 0, 0 }, NULL);
 	}
 
 	return 0;

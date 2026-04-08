@@ -40,10 +40,7 @@ void screen_init(struct screen* screen, int width, int height)
 
 void screen_print(struct screen* screen)
 {
-	char new_lines[] = 
-		"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-		"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-	printf("%s%s", new_lines, screen->buffer);
+	puts(screen->buffer);
 }
 
 void screen_clear(struct screen* screen, char c)
