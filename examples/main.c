@@ -13,8 +13,7 @@ int get_input()
 {
 	while (true)
 	{
-		char* out;
-		scanf("%s", &out);
+		getchar();
 		pressed_enter = true;
 	}
 }
@@ -65,7 +64,7 @@ int main()
 		screen_clear(&screen, ' ');
 
 		screen_draw_sprite(&screen, logo, logo_x_pos, 10);
-		screen_draw_sprite(&screen, "Press any key + ENTER to jump!", logo_x_pos, 6);
+		screen_draw_sprite(&screen, "Press ENTER to jump!", logo_x_pos, 6);
 		screen_draw_sprite(&screen, bird, 0, bird_y_pos);
 
 		screen_print(&screen);
