@@ -3,6 +3,8 @@
 TuiScreen is a tiny and efficient C library for turning the console window into a 2D canvas thats simple to use. 
 Great for making small UI console applications or games without all the boilerplate.
 
+![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/TuiScreen.png)
+
 ## How to build
 
 Windows
