@@ -53,6 +53,8 @@ void screen_init(struct screen* screen, int width, int height)
 	
 	// NULL TERMINATOR
 	_buffer_set_from_end(screen, 0, '\0');
+
+	screen_clear(screen, ' ');
 }
 
 void screen_clear(struct screen* screen, char c)
