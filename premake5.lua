@@ -44,6 +44,12 @@ project "TuiScreen"
             "/utf-8",
             "/TC",
         }
+
+    filter "system:linux"
+        links 
+        {
+            "m"
+        }
     
     filter "configurations:Debug"
         defines "PXR_DEBUG"
