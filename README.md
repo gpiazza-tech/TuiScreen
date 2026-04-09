@@ -22,8 +22,9 @@ Linux
 
 ## How to use
 
-Once you have TuiScreen built, you'll need to include it in your project. 
-Add TuiScreen/include to your project's include paths.
+With TuiScreen built, you'll need to include it in your project. 
+Add TuiScreen/include to your project's include paths. Be sure to
+link the library properly as well.
 
 You should now be able to include it in your C/C++ source file:
 
@@ -45,7 +46,7 @@ screen_print(&screen);
 getchar(); // so the program doesn't terminate immediately
 ```
 
-Now you won't see anything printed because we haven't added anything to the screen,
+You won't see anything printed because we haven't added anything to the screen,
 so let's add a basic border:
 
 ```c
@@ -91,7 +92,7 @@ screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
 
 ![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/docs/screen_3.png)
 
-But maybe you would like to draw a group of chars at once, rather than individually.
+But perhaps you would like to draw a group of chars at once, rather than individually.
 You can do that using the screen_draw_sprite utility:
 
 ```c
@@ -106,7 +107,7 @@ getchar();
 ![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/docs/screen_4.png)
 
 Why is it called draw sprite and not draw string you ask? Because this function can
-be used to draw more complex multi-line designs like this:
+be used to draw more complex multiline designs like this:
 
 ```c
 // ... init screen ...
@@ -123,8 +124,8 @@ getchar();
 
 ![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/docs/screen_5.png)
 
-Just like for the screen origin, the default sprite origin point is at the top-left,
-To change it to the center use
+Just like for the screen origin, the default sprite origin is at the top-left.
+To set it to be at the center, use
 
 ```c
 // ... init screen ...
@@ -136,6 +137,6 @@ screen.sprite_origin = TUI_SPRITE_ORIGIN_CENTER;
 
 ![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/docs/screen_6.png)
 
-And that's pretty much it! For a more detailed example in practice, as well as
-examples of more features, you can look at the demo application included 
+And that's pretty much it! For a more detailed example of how it might be used in practice, 
+as well as examples of more features, you can look at the demo application included 
 in the repository at examples/main.c
