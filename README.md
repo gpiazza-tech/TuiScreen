@@ -27,20 +27,20 @@ Add TuiScreen/include to your project's include paths.
 
 You should now be able to include it in your C/C++ source file:
 
-'''c
+'''
 #include <TuiScreen/include.h>
 '''
 
 Drawing a basic screen is very simple. First, you'll need to create a screen instance and initialize it:
 
-'''c
+'''
 struct screen screen;
 screen_init(&screen, 118, 26);
 '''
 
 To draw the screen to the console window, you can call
 
-'''c
+'''
 screen_print(&screen);
 getchar(); // so the program doesn't terminate immediately
 '''
@@ -48,7 +48,7 @@ getchar(); // so the program doesn't terminate immediately
 Now you won't see anything printed because we haven't added anything to the screen,
 so let's add a basic border:
 
-'''c
+'''
 // ... init screen ...
 
 screen_set_border(&screen,
@@ -67,7 +67,7 @@ And this is what we get:
 
 TuiScreen gives you the ability to set any character within this border:
 
-'''c
+'''
 // ... init screen ...
 
 screen_set_pixel(&screen, ':', 0, 0);
@@ -79,9 +79,9 @@ getchar();
 ![TuiScreen Screenshot](https://github.com/gpiazza-tech/TuiScreen/blob/master/docs/screen_2.png)
 
 By default, the x and y position that you specify will be relative to the top-left corner of the screen.
-If you would like to set the origin of the screen to be at the center for example, you can so with:
+If you would like to set the origin of the screen to be at the center for example, you can do so with:
 
-'''c
+'''
 // ... init screen ...
 
 screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
@@ -94,7 +94,7 @@ screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
 But maybe you would like to draw a group of chars at once, rather than individually.
 You can do that using the screen_draw_sprite utility:
 
-'''c
+'''
 // ... init screen ...
 
 screen_draw_sprite(&screen, "Hello World!", 0, 0);
@@ -108,7 +108,7 @@ getchar();
 Why is it called draw sprite and not draw string you ask? Because this function can
 be used to draw more complex multi-line designs like this:
 
-'''c
+'''
 // ... init screen ...
 
 screen_draw_sprite(&screen, 
@@ -126,7 +126,7 @@ getchar();
 Just like for the screen origin, the default sprite origin point is at the top-left,
 To change it to the center use
 
-'''c
+'''
 // ... init screen ...
 
 screen.sprite_origin = TUI_SPRITE_ORIGIN_CENTER;
