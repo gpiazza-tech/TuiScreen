@@ -2,15 +2,15 @@
 
 #include <screen/settings.h>
 
-#define _TUI_MAX_SCREEN_WIDTH 200
-#define _TUI_MAX_SCREEN_HEIGHT 200
+#define _TUI_MAX_BUFFER_WIDTH 40000
 
 struct screen
 {
 	int width;
 	int height;
 
-	char buffer[_TUI_MAX_SCREEN_WIDTH * _TUI_MAX_SCREEN_HEIGHT + _TUI_MAX_SCREEN_HEIGHT];
+	char buffer[_TUI_MAX_BUFFER_WIDTH];
+	int buffer_start_offset; // "\033[999A" will be inserted at the beginning
 	int buffer_size;
 
 	// SETTINGS

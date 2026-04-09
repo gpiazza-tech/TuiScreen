@@ -7,6 +7,16 @@
 #include <stdio.h>
 #include <string.h>
 
+void _buffer_set_from_start(struct screen* screen, int i, char c)
+{
+	screen->buffer[screen->buffer_start_offset + i] = c;
+}
+
+void _buffer_set_from_end(struct screen* screen, int i, char c)
+{
+	screen->buffer[screen->buffer_size - 1 - i] = c;
+}
+
 void screen_init(struct screen* screen, int width, int height)
 {
 	screen->width = width;
@@ -19,8 +29,15 @@ void screen_init(struct screen* screen, int width, int height)
 	int buffer_width = width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = height + 2; // + 2 for edges
 
-	screen->buffer_size = buffer_width * buffer_height + 1;
-	screen->buffer[screen->buffer_size];
+	screen->buffer_start_offset = 6; // "\033[999A" is 6 characters
+	screen->buffer[0] = '\033';
+	screen->buffer[1] = '[';
+	screen->buffer[2] = '9';
+	screen->buffer[3] = '9';
+	screen->buffer[4] = '9';
+	screen->buffer[5] = 'A';
+
+	screen->buffer_size = screen->buffer_start_offset + buffer_width * buffer_height;
 
 	screen_set_border(screen,
 		"   "
@@ -29,18 +46,13 @@ void screen_init(struct screen* screen, int width, int height)
 	);
 
 	// NEW LINES
-	for (int i = 0; i < buffer_height; i++)
+	for (int i = 0; i < buffer_height - 1; i++)
 	{
-		screen->buffer[buffer_width + buffer_width * i - 1] = '\n';
+		_buffer_set_from_start(screen, buffer_width - 1 + buffer_width * i, '\n');
 	}
-
+	
 	// NULL TERMINATOR
-	screen->buffer[screen->buffer_size - 1] = '\0';
-}
-
-void screen_print(struct screen* screen)
-{
-	puts(screen->buffer);
+	_buffer_set_from_end(screen, 0, '\0');
 }
 
 void screen_clear(struct screen* screen, char c)
@@ -53,7 +65,7 @@ void screen_clear(struct screen* screen, char c)
 	{
 		for (int x = 0; x < screen->width; x++)
 		{
-			screen->buffer[i] = c;
+			_buffer_set_from_start(screen, i, c);
 			i++;
 		}
 		i += 3; // skips '\n' and the left and right edges
@@ -111,7 +123,7 @@ static void _screen_set_pixel_no_transform(struct screen* screen, char c, int x,
 	if (y < 0)
 		y = screen->height - abs(y);
 
-	screen->buffer[buffer_width + y * buffer_width + x + 1] = c; // + y to skip '\n' on every line
+	_buffer_set_from_start(screen, buffer_width + y * buffer_width + x + 1, c); // + y to skip '\n' on every line
 }
 
 void screen_set_pixel(struct screen* screen, char c, int x, int y)
@@ -137,22 +149,23 @@ void screen_set_border(struct screen* screen, const char* characters)
 	// TOP AND BOTTOM EDGES
 	for (int i = 0; i < screen->width; i++)
 	{
-		screen->buffer[i + 1] = edge_top;
-		screen->buffer[screen->buffer_size - 4 - i] = edge_bottom;
+		_buffer_set_from_start(screen, i + 1, edge_top);
+		_buffer_set_from_end(screen, 2 + i, edge_bottom);
 	}
 
 	// LEFT AND RIGHT EDGES
 	for (int i = 0; i < screen->height; i++)
 	{
-		screen->buffer[buffer_width + i * buffer_width] = edge_left;
-		screen->buffer[buffer_width + (i + 1) * buffer_width - 2] = edge_right;
+		_buffer_set_from_start(screen, buffer_width + i * buffer_width, edge_left);
+		_buffer_set_from_start(screen, buffer_width + (i + 1) * buffer_width - 2, edge_right);
 	}
 
 	// CORNERS
-	screen->buffer[0] = corner_top_left;
-	screen->buffer[buffer_width - 2] = corner_top_right;
-	screen->buffer[buffer_height * buffer_width - buffer_width] = corner_bottom_left;
-	screen->buffer[buffer_height * buffer_width - 2] = corner_bottom_right;
+	_buffer_set_from_start(screen, 0, corner_top_left);
+	_buffer_set_from_start(screen, buffer_width - 2, corner_top_right);
+
+	_buffer_set_from_start(screen, buffer_height * buffer_width - buffer_width, corner_bottom_left);
+	_buffer_set_from_start(screen, buffer_height * buffer_width - 2, corner_bottom_right);
 }
 
 static void _screen_transform_sprite_position(struct screen* screen, const char* sprite, int* x, int* y)
@@ -227,4 +240,9 @@ void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y)
 		_screen_set_pixel_no_transform(screen, sprite[i], current_x, current_y);
 		current_x++;
 	}
+}
+
+void screen_print(struct screen* screen)
+{
+	puts(screen->buffer);
 }

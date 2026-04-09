@@ -20,7 +20,7 @@ int get_input()
 	}
 }
 
-int main()
+int flappy_bird()
 {
 	// THREADS
 
@@ -68,7 +68,7 @@ int main()
 	float bird_y_vel = 0.0f;
 	float bird_jump_force = 40.0f;
 
-	while(true)
+	while (true)
 	{
 		// TIME
 		int code = timespec_get(&current_time, TIME_UTC);
@@ -98,8 +98,13 @@ int main()
 		bird_y_pos += bird_y_vel * deltatime;
 		bird_y_pos = fmaxf(-11, bird_y_pos);
 
-		thrd_sleep(&(struct timespec){ 0, 0 }, NULL);
+		thrd_sleep(&(struct timespec) { 0, 0 }, NULL);
 	}
 
 	return 0;
+}
+
+int main()
+{
+	flappy_bird();
 }
