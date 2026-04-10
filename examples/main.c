@@ -24,7 +24,6 @@ int get_input()
 int flappy_bird()
 {
 	// THREADS
-
 	thrd_t input_thread;
 	thrd_create(&input_thread, &get_input, NULL);
 

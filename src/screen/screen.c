@@ -50,21 +50,28 @@ void screen_init(struct screen* screen, int width, int height)
 		"   "
 	);
 
-	// NEW LINES
+	// new lines
 	for (int i = 0; i < buffer_height - 1; i++)
 	{
 		_buffer_set_from_start(screen, buffer_width - 1 + buffer_width * i, '\n');
 	}
 	
-	// NULL TERMINATOR
+	// null terminator
 	_buffer_set_from_end(screen, 0, '\0');
 
+	// clear screen
 	screen_clear(screen, ' ');
+
+	// hide curser
+	printf("\033[?25l");
 }
 
 void screen_end(struct screen* screen)
 {
 	free(screen->_buffer);
+
+	// show curser
+	printf("\033[?25h");
 }
 
 void screen_clear(struct screen* screen, char c)
