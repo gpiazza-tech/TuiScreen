@@ -25,8 +25,8 @@ int flappy_bird()
 {
 	// THREADS
 
-	thrd_t input_thrd;
-	thrd_create(&input_thrd, &get_input, NULL);
+	thrd_t input_thread;
+	thrd_create(&input_thread, &get_input, NULL);
 
 	// INIT SCREEN
 	int width = 118;
@@ -35,11 +35,7 @@ int flappy_bird()
 	struct screen screen;
 	screen_init(&screen, width, height);
 
-	screen_set_border(&screen,
-		"+++"
-		"| |"
-		"+++"
-	);
+	screen_set_border(&screen, TUI_BORDER_DOUBLE);
 
 	screen.screen_origin = TUI_SCREEN_ORIGIN_CENTER;
 	screen.sprite_origin = TUI_SPRITE_ORIGIN_CENTER;

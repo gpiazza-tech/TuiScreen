@@ -23,6 +23,7 @@ void screen_init(struct screen* screen, int width, int height);
 void screen_print(struct screen* screen);
 
 void screen_clear(struct screen* screen, char c);
+void screen_set_value(struct screen* screen, float value, int x, int y);
 void screen_set_pixel(struct screen* screen, char c, int x, int y);
 
 void screen_set_border(struct screen* screen, const char* border);

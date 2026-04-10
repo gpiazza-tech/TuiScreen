@@ -2,6 +2,7 @@
 #include "screen.h"
 
 #include <screen/settings.h>
+#include <misc/CP437.h>
 
 #include <math.h>
 #include <stdlib.h>
@@ -133,6 +134,39 @@ void screen_set_pixel(struct screen* screen, char c, int x, int y)
 {
 	_screen_transform_position(screen, &x, &y);
 	_screen_set_pixel_no_transform(screen, c, x, y);
+}
+
+void screen_set_value(struct screen* screen, float value, int x, int y)
+{
+	char shades[5] = TUI_SHADES;
+
+	char out_val = shades[0]; // ' '
+
+	switch ((int)(value * 5.0f))
+	{
+	case 0:
+		out_val = shades[0];
+		break;
+	case 1:
+		out_val = shades[1];
+		break;
+	case 2:
+		out_val = shades[2];
+		break;
+	case 3:
+		out_val = shades[3];
+		break;
+	case 4:
+		out_val = shades[4];
+		break;
+	default:
+		break;
+	}
+
+	if (value >= 1.0f)
+		out_val = out_val = shades[4];
+
+	screen_set_pixel(screen, out_val, x, y);
 }
 
 void screen_set_border(struct screen* screen, const char* characters)
