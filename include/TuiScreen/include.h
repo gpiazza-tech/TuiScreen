@@ -5,7 +5,8 @@ extern "C" {
 #endif 
 
 #include <screen/screen.h>
-#include <misc/CP437.h>
+#include <misc/cp437.h>
+#include <input/input.h>
 
 #ifdef __cplusplus
 }

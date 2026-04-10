@@ -2,6 +2,12 @@
 
 #include <screen/settings.h>
 
+struct pixel
+{
+	char esc_cmd[28];
+	int character;
+};
+
 struct screen
 {
 	int width;

@@ -10,23 +10,8 @@
 
 #include <stdbool.h>
 
-bool pressed_enter = false;
-
-int get_input()
-{
-	while (true)
-	{
-		getchar();
-		pressed_enter = true;
-	}
-}
-
 int flappy_bird()
 {
-	// THREADS
-	thrd_t input_thread;
-	thrd_create(&input_thread, &get_input, NULL);
-
 	// INIT SCREEN
 	int width = 118;
 	int height = 26;
@@ -84,10 +69,9 @@ int flappy_bird()
 
 		last_time = current_time;
 
-		if (pressed_enter)
+		if (input_key_down(TUI_KEY_UP))
 		{
 			bird_y_vel = bird_jump_force;
-			pressed_enter = false;
 		}
 
 		bird_y_vel -= 60.0f * deltatime;

@@ -38,6 +38,7 @@ project "TuiScreen"
     }
 
     filter "system:windows"
+        defines "TUI_PLATFORM_WINDOWS"
         systemversion "latest"
         toolset "msc-v145"
 
@@ -48,6 +49,7 @@ project "TuiScreen"
         }
 
     filter "system:linux"
+        defines "TUI_PLATFORM_LINUX"
         links 
         {
             "m"

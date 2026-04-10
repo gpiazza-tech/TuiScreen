@@ -1,0 +1,31 @@
+#pragma once
+
+// SPECIAL CHARACTERS
+
+#define TUI_SHADES " ░▒▓█"
+
+#define TUI_FULL_BLOCK "█"
+#define TUI_DARK_SHADE "▓"
+#define TUI_MEDUIM_SHADE "▒"
+#define TUI_LIGHT_SHADE "░"
+
+// BORDERS
+
+#define TUI_BORDER_LIGHT "┌─┐│#│└─┘"
+
+#define TUI_BOX_DRAWINGS_LIGHT_DOWN_AND_RIGHT "┌"
+#define TUI_BOX_DRAWINGS_LIGHT_DOWN_AND_LEFT "┐"
+#define TUI_BOX_DRAWINGS_LIGHT_UP_AND_RIGHT "└"
+#define TUI_BOX_DRAWINGS_LIGHT_UP_AND_LEFT "┘"
+#define TUI_BOX_DRAWINGS_LIGHT_HORIZONTAL "─"
+#define TUI_BOX_DRAWINGS_LIGHT_VERTICAL "│"
+
+
+#define TUI_BORDER_DOUBLE "╔═╗║#║╚═╝"
+
+#define TUI_BOX_DRAWINGS_DOUBLE_DOWN_AND_RIGHT "╔"
+#define TUI_BOX_DRAWINGS_DOUBLE_DOWN_AND_LEFT "╗"
+#define TUI_BOX_DRAWINGS_DOUBLE_UP_AND_RIGHT "╚"
+#define TUI_BOX_DRAWINGS_DOUBLE_UP_AND_LEFT "╝"
+#define TUI_BOX_DRAWINGS_DOUBLE_HORIZONTAL "═"
+#define TUI_BOX_DRAWINGS_DOUBLE_VERTICAL "║"
