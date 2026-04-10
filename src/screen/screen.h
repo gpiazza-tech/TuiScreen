@@ -18,6 +18,8 @@ struct screen
 };
 
 void screen_init(struct screen* screen, int width, int height);
+void screen_end(struct screen* screen);
+
 void screen_print(struct screen* screen);
 
 void screen_clear(struct screen* screen, char c);

@@ -98,6 +98,7 @@ int flappy_bird()
 		thrd_sleep(&(struct timespec) { 0, 0 }, NULL);
 	}
 
+	screen_end(&screen);
 	return 0;
 }
 
