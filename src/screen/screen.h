@@ -2,16 +2,14 @@
 
 #include <screen/settings.h>
 
-#define _TUI_MAX_BUFFER_WIDTH 40000
-
 struct screen
 {
 	int width;
 	int height;
 
-	char buffer[_TUI_MAX_BUFFER_WIDTH];
-	int buffer_start_offset; // "\033[999A" will be inserted at the beginning
-	int buffer_size;
+	char* _buffer;
+	int _buffer_size;
+	int _buffer_start_offset; // "\033[999A" will be inserted at the beginning
 
 	// SETTINGS
 	enum wrap_mode wrap_mode;

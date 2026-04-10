@@ -8,15 +8,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 
 void _buffer_set_from_start(struct screen* screen, int i, char c)
 {
-	screen->buffer[screen->buffer_start_offset + i] = c;
+	screen->_buffer[screen->_buffer_start_offset + i] = c;
 }
 
 void _buffer_set_from_end(struct screen* screen, int i, char c)
 {
-	screen->buffer[screen->buffer_size - 1 - i] = c;
+	screen->_buffer[screen->_buffer_size - 1 - i] = c;
 }
 
 void screen_init(struct screen* screen, int width, int height)
@@ -31,15 +32,17 @@ void screen_init(struct screen* screen, int width, int height)
 	int buffer_width = width + 3;	// + 2 for edges, + 1 for '\n'
 	int buffer_height = height + 2; // + 2 for edges
 
-	screen->buffer_start_offset = 6; // "\033[999A" is 6 characters
-	screen->buffer[0] = '\033';
-	screen->buffer[1] = '[';
-	screen->buffer[2] = '9';
-	screen->buffer[3] = '9';
-	screen->buffer[4] = '9';
-	screen->buffer[5] = 'A';
+	screen->_buffer_start_offset = 6; // "\033[999A" is 6 characters
 
-	screen->buffer_size = screen->buffer_start_offset + buffer_width * buffer_height;
+	screen->_buffer_size = screen->_buffer_start_offset + buffer_width * buffer_height;
+	screen->_buffer = malloc((size_t)screen->_buffer_size);
+
+	screen->_buffer[0] = '\033';
+	screen->_buffer[1] = '[';
+	screen->_buffer[2] = '9';
+	screen->_buffer[3] = '9';
+	screen->_buffer[4] = '9';
+	screen->_buffer[5] = 'A';
 
 	screen_set_border(screen,
 		"   "
@@ -57,6 +60,11 @@ void screen_init(struct screen* screen, int width, int height)
 	_buffer_set_from_end(screen, 0, '\0');
 
 	screen_clear(screen, ' ');
+}
+
+void screen_end(struct screen* screen)
+{
+	free(screen->_buffer);
 }
 
 void screen_clear(struct screen* screen, char c)
@@ -281,5 +289,5 @@ void screen_draw_sprite(struct screen* screen, const char* sprite, int x, int y)
 
 void screen_print(struct screen* screen)
 {
-	puts(screen->buffer);
+	puts(screen->_buffer);
 }
